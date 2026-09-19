@@ -2,7 +2,7 @@
    SHOP EASE BACKEND API
    ========================================================= */
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "https://shopease-d2jh.onrender.com/api";
 
 let backendProducts = [];
 let backendConnected = false;
