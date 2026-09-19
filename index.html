@@ -1,0 +1,1955 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ShopEase | Online Shopping</title>
+
+    <meta name="description" content="ShopEase - Fashion, Electronics, Shoes, Home & Kitchen">
+
+    <meta name="theme-color" content="#111111">
+
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+     ANNOUNCEMENT BAR
+===================================================== -->
+
+    <div class="announcement-bar">
+
+        <div class="container announcement-inner">
+
+            <span>
+                🎉 Big Deals. Better Prices. Everyday.
+            </span>
+
+            <span>
+                Free delivery on orders above ₹2,500
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+     HEADER
+===================================================== -->
+
+    <header class="main-header">
+
+        <div class="container header-inner">
+
+            <!-- LOGO -->
+
+            <a href="index.html" class="logo">
+
+                <span class="logo-mark">
+                    S
+                </span>
+
+                <span class="logo-text">
+                    Shop<span>Ease</span>
+                </span>
+
+            </a>
+
+
+            <!-- DELIVERY LOCATION -->
+
+            <div class="delivery-location">
+
+                <span class="location-icon">
+                    📍
+                </span>
+
+                <div>
+
+                    <small>
+                        Deliver to
+                    </small>
+
+                    <strong>
+                        Kolkata 700001
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- SEARCH -->
+
+            <div class="search-box">
+
+                <input type="search" id="searchInput" placeholder="Search products, brands and more" autocomplete="off">
+
+                <button id="searchButton" type="button">
+                    🔍
+                </button>
+
+            </div>
+
+
+            <!-- HEADER ACTIONS -->
+
+            <div class="header-actions">
+
+                <button class="header-action" onclick="showInfo('account')">
+
+                    <span>
+                        👤
+                    </span>
+
+                    <small>
+                        Hello, Sign in
+                    </small>
+
+                    <strong>
+                        Account
+                    </strong>
+
+                </button>
+
+
+                <button class="header-action" onclick="showInfo('orders')">
+
+                    <span>
+                        📦
+                    </span>
+
+                    <small>
+                        Track
+                    </small>
+
+                    <strong>
+                        Orders
+                    </strong>
+
+                </button>
+
+
+                <button class="header-action" onclick="showWishlist()">
+
+                    <span>
+                        ♡
+                    </span>
+
+                    <small>
+                        My
+                    </small>
+
+                    <strong>
+                        Wishlist
+                    </strong>
+
+                </button>
+
+
+                <button class="cart-header" onclick="openCart()">
+
+                    <span>
+                        🛒
+                    </span>
+
+                    <b id="cartCount">
+                        0
+                    </b>
+
+                    <div>
+
+                        <small>
+                            My
+                        </small>
+
+                        <strong>
+                            Cart
+                        </strong>
+
+                    </div>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+         CATEGORY NAVIGATION
+    ================================================= -->
+
+        <nav class="category-nav">
+
+            <div class="container category-nav-inner">
+
+                <button class="nav-category" onclick="filterByCategory('All')">
+                    All
+                </button>
+
+
+                <!-- FASHION -->
+
+                <div class="nav-category-wrapper">
+
+                    <button class="nav-category" onclick="toggleNavMenu('fashionNavMenu')">
+                        Fashion
+                        <span>⌄</span>
+                    </button>
+
+
+                    <div class="category-dropdown" id="fashionNavMenu">
+
+                        <button onclick="filterByAudience('Fashion','Women')">
+                            Women
+                        </button>
+
+                        <button onclick="filterByAudience('Fashion','Men')">
+                            Men
+                        </button>
+
+                        <button onclick="filterByAudience('Fashion','Kids')">
+                            Kids
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ELECTRONICS -->
+
+                <button class="nav-category" onclick="filterByCategory('Electronics')">
+                    Electronics
+                </button>
+
+
+                <!-- SHOES -->
+
+                <div class="nav-category-wrapper">
+
+                    <button class="nav-category" onclick="toggleNavMenu('shoesNavMenu')">
+                        Shoes
+                        <span>⌄</span>
+                    </button>
+
+
+                    <div class="category-dropdown" id="shoesNavMenu">
+
+                        <button onclick="filterByAudience('Shoes','Women')">
+                            Women
+                        </button>
+
+                        <button onclick="filterByAudience('Shoes','Men')">
+                            Men
+                        </button>
+
+                        <button onclick="filterByAudience('Shoes','Kids')">
+                            Kids
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- HOME -->
+
+                <button class="nav-category" onclick="filterByCategory('Home & Kitchen')">
+                    Home & Kitchen
+                </button>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =====================================================
+     HOME PAGE
+===================================================== -->
+
+    <main id="homePage">
+
+
+        <!-- HERO -->
+
+        <section class="hero-section">
+
+            <div class="container hero-grid">
+
+                <div class="hero-content">
+
+                    <span class="hero-badge">
+                        NEW SEASON COLLECTION
+                    </span>
+
+                    <h1>
+                        Everything You Need.
+                        <span>
+                            All in One Place.
+                        </span>
+                    </h1>
+
+                    <p>
+                        Discover fashion, electronics, shoes,
+                        home essentials and more at prices
+                        you'll love.
+                    </p>
+
+
+                    <div class="hero-buttons">
+
+                        <button class="btn btn-primary" onclick="scrollToProducts()">
+                            Shop Now
+                        </button>
+
+                        <button class="btn btn-secondary" onclick="scrollToDeals()">
+                            Explore Deals
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hero-visual">
+
+                    <div class="hero-card">
+
+                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=85"
+                            alt="Shopping collection">
+
+                        <div class="hero-card-label">
+
+                            <strong>
+                                Shop Smart
+                            </strong>
+
+                            <span>
+                                Live Better
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TRUST -->
+
+        <section class="trust-strip">
+
+            <div class="container trust-grid">
+
+                <div class="trust-item">
+
+                    <span>
+                        🚚
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Fast Delivery
+                        </strong>
+
+                        <small>
+                            Across India
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="trust-item">
+
+                    <span>
+                        ↩️
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            10-Day Returns
+                        </strong>
+
+                        <small>
+                            Easy returns & exchange
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="trust-item">
+
+                    <span>
+                        🔒
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Secure Payments
+                        </strong>
+
+                        <small>
+                            Protected checkout
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="trust-item">
+
+                    <span>
+                        ✓
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Trusted Shopping
+                        </strong>
+
+                        <small>
+                            Quality products
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+         CATEGORIES
+    ================================================= -->
+
+        <section class="categories-section">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            EXPLORE
+                        </span>
+
+                        <h2>
+                            Shop by Category
+                        </h2>
+
+                        <p>
+                            Find everything you need in one place.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="category-cards">
+
+
+                    <!-- FASHION -->
+
+                    <article class="category-card" onclick="filterByCategory('Fashion')">
+
+                        <div class="category-image">
+
+                            <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=900&q=80"
+                                alt="Fashion">
+
+                        </div>
+
+                        <div class="category-content">
+
+                            <span>
+                                01
+                            </span>
+
+                            <h3>
+                                Fashion
+                            </h3>
+
+                            <p>
+                                Women, Men & Kids
+                            </p>
+
+                            <button onclick="event.stopPropagation();toggleCategoryPanel('fashionCategoryPanel')">
+                                Explore →
+                            </button>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- ELECTRONICS -->
+
+                    <article class="category-card" onclick="filterByCategory('Electronics')">
+
+                        <div class="category-image">
+
+                            <img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&w=900&q=80"
+                                alt="Electronics">
+
+                        </div>
+
+                        <div class="category-content">
+
+                            <span>
+                                02
+                            </span>
+
+                            <h3>
+                                Electronics
+                            </h3>
+
+                            <p>
+                                Tech for everyday life
+                            </p>
+
+                            <button onclick="event.stopPropagation();filterByCategory('Electronics')">
+                                Shop Now →
+                            </button>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- SHOES -->
+
+                    <article class="category-card" onclick="filterByCategory('Shoes')">
+
+                        <div class="category-image">
+
+                            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80"
+                                alt="Shoes">
+
+                        </div>
+
+                        <div class="category-content">
+
+                            <span>
+                                03
+                            </span>
+
+                            <h3>
+                                Shoes
+                            </h3>
+
+                            <p>
+                                Women, Men & Kids
+                            </p>
+
+                            <button onclick="event.stopPropagation();toggleCategoryPanel('shoesCategoryPanel')">
+                                Explore →
+                            </button>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- HOME -->
+
+                    <article class="category-card" onclick="filterByCategory('Home & Kitchen')">
+
+                        <div class="category-image">
+
+                            <img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=900&q=80"
+                                alt="Home and Kitchen">
+
+                        </div>
+
+                        <div class="category-content">
+
+                            <span>
+                                04
+                            </span>
+
+                            <h3>
+                                Home & Kitchen
+                            </h3>
+
+                            <p>
+                                Make your home better
+                            </p>
+
+                            <button onclick="event.stopPropagation();filterByCategory('Home & Kitchen')">
+                                Shop Now →
+                            </button>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <!-- CATEGORY PANELS -->
+
+                <div class="category-panel" id="fashionCategoryPanel">
+
+                    <strong>
+                        Fashion
+                    </strong>
+
+                    <button onclick="filterByAudience('Fashion','Women')">
+                        Women
+                    </button>
+
+                    <button onclick="filterByAudience('Fashion','Men')">
+                        Men
+                    </button>
+
+                    <button onclick="filterByAudience('Fashion','Kids')">
+                        Kids
+                    </button>
+
+                </div>
+
+
+                <div class="category-panel" id="shoesCategoryPanel">
+
+                    <strong>
+                        Shoes
+                    </strong>
+
+                    <button onclick="filterByAudience('Shoes','Women')">
+                        Women
+                    </button>
+
+                    <button onclick="filterByAudience('Shoes','Men')">
+                        Men
+                    </button>
+
+                    <button onclick="filterByAudience('Shoes','Kids')">
+                        Kids
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DEALS -->
+
+        <section class="deals-section" id="dealsSection">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            TODAY'S PICKS
+                        </span>
+
+                        <h2>
+                            Deals You'll Love
+                        </h2>
+
+                        <p>
+                            Fresh picks at prices worth checking out.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="deal-grid" id="dealGrid"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+         PRODUCTS
+    ================================================= -->
+
+        <section class="products-section" id="productsSection">
+
+            <div class="container">
+
+                <div class="products-heading">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            SHOP
+                        </span>
+
+                        <h2>
+                            Products
+                        </h2>
+
+                        <p id="resultsSummary">
+                            Loading products...
+                        </p>
+
+                    </div>
+
+
+                    <div class="products-sort">
+
+                        <label for="sortSelect">
+                            Sort by
+                        </label>
+
+                        <select id="sortSelect">
+
+                            <option value="default">
+                                Recommended
+                            </option>
+
+                            <option value="price-low">
+                                Price: Low to High
+                            </option>
+
+                            <option value="price-high">
+                                Price: High to Low
+                            </option>
+
+                            <option value="rating">
+                                Customer Rating
+                            </option>
+
+                            <option value="discount">
+                                Biggest Discount
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="products-layout">
+
+
+                    <!-- FILTERS -->
+
+                    <aside class="filter-sidebar">
+
+                        <div class="filter-header">
+
+                            <h3>
+                                Filters
+                            </h3>
+
+                            <button onclick="clearFilters()">
+                                Clear All
+                            </button>
+
+                        </div>
+
+
+                        <div class="filter-group">
+
+                            <h4>
+                                Category
+                            </h4>
+
+                            <label>
+                                <input type="radio" name="categoryFilter" value="All" checked>
+                                All Products
+                            </label>
+
+                            <label>
+                                <input type="radio" name="categoryFilter" value="Fashion">
+                                Fashion
+                            </label>
+
+                            <label>
+                                <input type="radio" name="categoryFilter" value="Electronics">
+                                Electronics
+                            </label>
+
+                            <label>
+                                <input type="radio" name="categoryFilter" value="Shoes">
+                                Shoes
+                            </label>
+
+                            <label>
+                                <input type="radio" name="categoryFilter" value="Home & Kitchen">
+                                Home & Kitchen
+                            </label>
+
+                        </div>
+
+
+                        <div class="filter-group">
+
+                            <h4>
+                                Customer Rating
+                            </h4>
+
+                            <label>
+                                <input type="radio" name="ratingFilter" value="0" checked>
+                                All Ratings
+                            </label>
+
+                            <label>
+                                <input type="radio" name="ratingFilter" value="4">
+                                ⭐ 4★ & above
+                            </label>
+
+                            <label>
+                                <input type="radio" name="ratingFilter" value="3">
+                                ⭐ 3★ & above
+                            </label>
+
+                        </div>
+
+
+                        <div class="filter-group">
+
+                            <h4>
+                                Price
+                            </h4>
+
+                            <label>
+                                <input type="radio" name="priceFilter" value="0" checked>
+                                All Prices
+                            </label>
+
+                            <label>
+                                <input type="radio" name="priceFilter" value="500">
+                                Under ₹500
+                            </label>
+
+                            <label>
+                                <input type="radio" name="priceFilter" value="1000">
+                                Under ₹1,000
+                            </label>
+
+                            <label>
+                                <input type="radio" name="priceFilter" value="2500">
+                                Under ₹2,500
+                            </label>
+
+                            <label>
+                                <input type="radio" name="priceFilter" value="5000">
+                                Under ₹5,000
+                            </label>
+
+                        </div>
+
+                    </aside>
+
+
+                    <!-- PRODUCT GRID -->
+
+                    <div class="products-area">
+
+                        <div class="product-grid" id="productGrid"></div>
+
+                        <div class="pagination" id="pagination"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PURPOSE -->
+
+        <section class="purpose-section">
+
+            <div class="container purpose-grid">
+
+                <div>
+
+                    <span class="section-kicker">
+                        WHY SHOPEASE
+                    </span>
+
+                    <h2>
+                        Shopping Made
+                        <span>
+                            Simple.
+                        </span>
+                    </h2>
+
+                    <p>
+                        ShopEase brings fashion, technology,
+                        footwear and home essentials together
+                        in one convenient marketplace.
+                    </p>
+
+                </div>
+
+
+                <div class="purpose-card">
+
+                    <div>
+                        ✦
+                    </div>
+
+                    <h3>
+                        One Place.
+                        Endless Choices.
+                    </h3>
+
+                    <p>
+                        Discover products for every part
+                        of your everyday life.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- NEWSLETTER -->
+
+        <section class="newsletter-section">
+
+            <div class="container newsletter-inner">
+
+                <div>
+
+                    <span class="section-kicker">
+                        STAY UPDATED
+                    </span>
+
+                    <h2>
+                        Get the latest deals.
+                    </h2>
+
+                    <p>
+                        Subscribe for offers, new arrivals
+                        and ShopEase updates.
+                    </p>
+
+                </div>
+
+
+                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+
+                    <input type="email" id="newsletterEmail" placeholder="Enter your email address" required>
+
+                    <button class="btn btn-primary">
+                        Subscribe
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+     PRODUCT DETAILS PAGE
+===================================================== -->
+
+    <main id="productPage" class="product-page" style="display:none;">
+
+        <div class="container">
+
+
+            <!-- BREADCRUMB -->
+
+            <div class="product-breadcrumb" id="productBreadcrumb"></div>
+
+
+            <!-- PRODUCT TOP -->
+
+            <section class="product-detail-layout">
+
+
+                <!-- PRODUCT GALLERY -->
+
+                <div class="product-gallery">
+
+                    <div class="product-gallery-layout">
+
+                        <div class="product-thumbnails" id="productThumbnails"></div>
+
+
+                        <div class="product-main-image">
+
+                            <img id="detailProductImage" src="" alt="Product">
+
+                            <button class="product-wishlist-btn" id="detailWishlistButton"
+                                onclick="toggleDetailWishlist()">
+                                ♡
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT INFORMATION -->
+
+                <div class="product-detail-info">
+
+
+                    <div class="detail-brand" id="detailProductBrand">
+                        Brand
+                    </div>
+
+
+                    <h1 class="detail-product-name" id="detailProductName">
+                        Product Name
+                    </h1>
+
+
+                    <div class="detail-rating-row">
+
+                        <span class="detail-rating" id="detailProductRating">
+                            ⭐ 4.5
+                        </span>
+
+                        <span id="detailProductReviews">
+                            1,000 ratings
+                        </span>
+
+                    </div>
+
+
+                    <!-- PRICE -->
+
+                    <div class="detail-price-box">
+
+                        <span class="detail-price" id="detailProductPrice">
+                            ₹1,299
+                        </span>
+
+                        <span class="detail-original-price" id="detailProductOriginalPrice">
+                            ₹2,599
+                        </span>
+
+                        <span class="detail-discount" id="detailProductDiscount">
+                            50% OFF
+                        </span>
+
+                    </div>
+
+
+                    <p class="detail-tax-note">
+                        Inclusive of all taxes
+                    </p>
+
+
+                    <!-- OFFERS -->
+
+                    <div class="detail-offers">
+
+                        <h3>
+                            Available Offers
+                        </h3>
+
+                        <div class="offer-item">
+
+                            <span>
+                                🏷️
+                            </span>
+
+                            <p>
+                                Extra 10% off with coupon
+                                <b>SHOP10</b>
+                            </p>
+
+                        </div>
+
+                        <div class="offer-item">
+
+                            <span>
+                                💳
+                            </span>
+
+                            <p>
+                                Bank offers may be available
+                                at checkout.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BENEFITS -->
+
+                    <div class="detail-benefits">
+
+                        <div>
+                            <span>🚚</span>
+                            <strong>FREE Delivery</strong>
+                        </div>
+
+                        <div>
+                            <span>↩️</span>
+                            <strong>10-Day Return</strong>
+                        </div>
+
+                        <div>
+                            <span>🔒</span>
+                            <strong>Secure Payment</strong>
+                        </div>
+
+                    </div>
+
+
+                    <!-- STOCK -->
+
+                    <div class="stock-line" id="detailStock"></div>
+
+
+                    <!-- SIZE -->
+
+                    <div class="detail-size-section" id="detailSizeSection">
+
+                        <div class="detail-option-heading">
+
+                            <strong>
+                                Select Size
+                            </strong>
+
+                            <button onclick="showSizeGuide()">
+                                Size Guide
+                            </button>
+
+                        </div>
+
+                        <div class="detail-size-options" id="detailSizeOptions"></div>
+
+                    </div>
+
+
+                    <!-- QUANTITY -->
+
+                    <div class="detail-quantity-section">
+
+                        <strong>
+                            Quantity
+                        </strong>
+
+                        <div class="detail-quantity-control">
+
+                            <button onclick="changeDetailQuantity(-1)">
+                                −
+                            </button>
+
+                            <span id="detailQuantity">
+                                1
+                            </span>
+
+                            <button onclick="changeDetailQuantity(1)">
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="detail-action-buttons">
+
+                        <button class="detail-add-cart-btn" onclick="addDetailProductToCart()">
+                            🛒 Add to Cart
+                        </button>
+
+                        <button class="detail-buy-now-btn" onclick="buyDetailProductNow()">
+                            Buy Now
+                        </button>
+
+                    </div>
+
+
+                    <!-- DELIVERY -->
+
+                    <div class="detail-delivery-box">
+
+                        <h3>
+                            Delivery
+                        </h3>
+
+                        <div class="delivery-location-detail">
+
+                            <span>
+                                📍
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Deliver to Kolkata 700001
+                                </strong>
+
+                                <p>
+                                    Enter your PIN code below
+                                    for an estimate.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="delivery-date">
+
+                            <span>
+                                🚚
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Standard Delivery
+                                </strong>
+
+                                <p id="detailDeliveryDate">
+                                    Available soon
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PIN CODE -->
+
+                    <div class="delivery-checker">
+
+                        <h3>
+                            Check Delivery
+                        </h3>
+
+                        <p>
+                            Enter your PIN code to check
+                            delivery availability.
+                        </p>
+
+                        <div class="pincode-row">
+
+                            <input id="pincodeInput" maxlength="6" inputmode="numeric" placeholder="Enter PIN code">
+
+                            <button onclick="checkDelivery()">
+                                Check
+                            </button>
+
+                        </div>
+
+                        <div class="pincode-result" id="pincodeResult"></div>
+
+                    </div>
+
+
+                    <!-- SELLER -->
+
+                    <div class="seller-information">
+
+                        <h3>
+                            Seller Information
+                        </h3>
+
+                        <div class="seller-main">
+
+                            <div class="seller-avatar">
+                                S
+                            </div>
+
+                            <div class="seller-details">
+
+                                <strong id="detailSellerName">
+                                    ShopEase Verified Seller
+                                </strong>
+
+                                <span>
+                                    ✓ Verified Seller
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="seller-stats">
+
+                            <div>
+                                <strong>4.5+</strong>
+                                <span>Seller Rating</span>
+                            </div>
+
+                            <div>
+                                <strong>95%</strong>
+                                <span>Positive Reviews</span>
+                            </div>
+
+                            <div>
+                                <strong>1K+</strong>
+                                <span>Products Sold</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SERVICE -->
+
+                    <div class="service-information">
+
+                        <h3>
+                            ShopEase Promise
+                        </h3>
+
+                        <div class="service-grid">
+
+                            <div class="service-item">
+
+                                <span>
+                                    🛡️
+                                </span>
+
+                                <div>
+                                    <strong>
+                                        Secure Payments
+                                    </strong>
+
+                                    <small>
+                                        Protected payment
+                                        information.
+                                    </small>
+                                </div>
+
+                            </div>
+
+
+                            <div class="service-item">
+
+                                <span>
+                                    ↩️
+                                </span>
+
+                                <div>
+                                    <strong>
+                                        Easy Returns
+                                    </strong>
+
+                                    <small>
+                                        Eligible products
+                                        can be returned.
+                                    </small>
+                                </div>
+
+                            </div>
+
+
+                            <div class="service-item">
+
+                                <span>
+                                    🚚
+                                </span>
+
+                                <div>
+                                    <strong>
+                                        Reliable Delivery
+                                    </strong>
+
+                                    <small>
+                                        Track your order
+                                        after dispatch.
+                                    </small>
+                                </div>
+
+                            </div>
+
+
+                            <div class="service-item">
+
+                                <span>
+                                    💳
+                                </span>
+
+                                <div>
+                                    <strong>
+                                        Multiple Payments
+                                    </strong>
+
+                                    <small>
+                                        Cards, UPI and more.
+                                    </small>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ABOUT -->
+
+            <section class="product-about-section">
+
+                <div class="product-section-heading">
+
+                    <span class="section-kicker">
+                        PRODUCT INFORMATION
+                    </span>
+
+                    <h2>
+                        About this product
+                    </h2>
+
+                </div>
+
+
+                <div class="product-about-grid">
+
+                    <div class="product-description-card">
+
+                        <h3>
+                            Product Description
+                        </h3>
+
+                        <p id="detailProductDescription"></p>
+
+                    </div>
+
+
+                    <div class="product-highlights-card">
+
+                        <h3>
+                            Product Highlights
+                        </h3>
+
+                        <ul id="detailProductHighlights"></ul>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- SPECIFICATIONS -->
+
+            <section class="product-specifications">
+
+                <div class="product-section-heading">
+
+                    <span class="section-kicker">
+                        SPECIFICATIONS
+                    </span>
+
+                    <h2>
+                        Product Details
+                    </h2>
+
+                </div>
+
+
+                <div class="specification-table">
+
+                    <div class="specification-row">
+                        <span>Brand</span>
+                        <strong id="specBrand">-</strong>
+                    </div>
+
+                    <div class="specification-row">
+                        <span>Category</span>
+                        <strong id="specCategory">-</strong>
+                    </div>
+
+                    <div class="specification-row">
+                        <span>Subcategory</span>
+                        <strong id="specSubcategory">-</strong>
+                    </div>
+
+                    <div class="specification-row">
+                        <span>Product ID</span>
+                        <strong id="specProductId">-</strong>
+                    </div>
+
+                    <div class="specification-row">
+                        <span>Availability</span>
+                        <strong id="specAvailability">
+                            In Stock
+                        </strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- REVIEWS -->
+
+            <section class="product-reviews-section">
+
+                <div class="product-section-heading">
+
+                    <span class="section-kicker">
+                        CUSTOMER FEEDBACK
+                    </span>
+
+                    <h2>
+                        Customer Reviews
+                    </h2>
+
+                </div>
+
+
+                <div class="reviews-summary">
+
+                    <div class="reviews-score">
+
+                        <strong id="detailReviewScore">
+                            4.5
+                        </strong>
+
+                        <span>
+                            out of 5
+                        </span>
+
+                        <div id="detailReviewStars">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+
+                    </div>
+
+
+                    <div class="reviews-summary-text">
+
+                        <strong id="detailReviewSummary">
+                            Highly rated by customers
+                        </strong>
+
+                        <p>
+                            Customer ratings and reviews help
+                            other shoppers make informed decisions.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="review-list">
+
+                    <article class="review-card">
+
+                        <div class="review-card-top">
+
+                            <strong>
+                                Verified Customer
+                            </strong>
+
+                            <span>
+                                ⭐⭐⭐⭐⭐
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Product quality was good and
+                            delivery was on time.
+                        </p>
+
+                    </article>
+
+
+                    <article class="review-card">
+
+                        <div class="review-card-top">
+
+                            <strong>
+                                Verified Customer
+                            </strong>
+
+                            <span>
+                                ⭐⭐⭐⭐☆
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Good value for the price.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+
+            <!-- RELATED PRODUCTS -->
+
+            <section class="related-products-section">
+
+                <div class="product-section-heading">
+
+                    <span class="section-kicker">
+                        RECOMMENDED
+                    </span>
+
+                    <h2>
+                        You May Also Like
+                    </h2>
+
+                </div>
+
+                <div class="related-products-grid" id="relatedProductsGrid"></div>
+
+            </section>
+
+
+            <div class="back-to-shop">
+
+                <button onclick="goBackToShop()">
+                    ← Continue Shopping
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+     FOOTER
+===================================================== -->
+
+    <footer class="main-footer">
+
+        <div class="container footer-grid">
+
+            <div class="footer-brand">
+
+                <a href="index.html" class="logo">
+
+                    <span class="logo-mark">
+                        S
+                    </span>
+
+                    <span class="logo-text">
+                        Shop<span>Ease</span>
+                    </span>
+
+                </a>
+
+                <p>
+                    Your everyday marketplace for everything
+                    you need.
+                </p>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Shop
+                </h4>
+
+                <button onclick="filterByCategory('Fashion')">
+                    Fashion
+                </button>
+
+                <button onclick="filterByCategory('Electronics')">
+                    Electronics
+                </button>
+
+                <button onclick="filterByCategory('Shoes')">
+                    Shoes
+                </button>
+
+                <button onclick="filterByCategory('Home & Kitchen')">
+                    Home & Kitchen
+                </button>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Customer Service
+                </h4>
+
+                <button onclick="showInfo('contact')">
+                    Contact Us
+                </button>
+
+                <button onclick="showInfo('returns')">
+                    Returns & Exchange
+                </button>
+
+                <button onclick="showInfo('delivery')">
+                    Delivery Information
+                </button>
+
+                <button onclick="showInfo('faq')">
+                    FAQ
+                </button>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Information
+                </h4>
+
+                <button onclick="showInfo('about')">
+                    About ShopEase
+                </button>
+
+                <button onclick="showInfo('privacy')">
+                    Privacy Policy
+                </button>
+
+                <button onclick="showInfo('terms')">
+                    Terms & Conditions
+                </button>
+
+                <button onclick="showInfo('security')">
+                    Secure Shopping
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <div class="container">
+
+                <p>
+                    © 2026 ShopEase. All rights reserved.
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+     CART DRAWER
+===================================================== -->
+
+    <aside class="cart-drawer" id="cartDrawer">
+
+        <div class="cart-drawer-header">
+
+            <div>
+
+                <span class="section-kicker">
+                    SHOPPING BAG
+                </span>
+
+                <h2>
+                    Your Cart
+                </h2>
+
+            </div>
+
+            <button onclick="closeCart()">
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="cart-content" id="cartContent"></div>
+
+    </aside>
+
+
+    <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+
+    <!-- =====================================================
+     INFORMATION MODAL
+===================================================== -->
+
+    <div class="modal-overlay" id="infoModal">
+
+        <div class="modal">
+
+            <button class="modal-close" onclick="closeModal('infoModal')">
+                ✕
+            </button>
+
+            <div class="modal-content">
+
+                <span class="section-kicker" id="infoModalKicker">
+                    INFORMATION
+                </span>
+
+                <h2 id="infoModalTitle">
+                    Information
+                </h2>
+
+                <div id="infoModalBody"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+     SIZE GUIDE
+===================================================== -->
+
+    <div class="modal-overlay" id="sizeGuideModal">
+
+        <div class="modal">
+
+            <button class="modal-close" onclick="closeModal('sizeGuideModal')">
+                ✕
+            </button>
+
+            <div class="modal-content">
+
+                <span class="section-kicker">
+                    SIZE GUIDE
+                </span>
+
+                <h2>
+                    Find Your Size
+                </h2>
+
+                <p>
+                    Use this general guide to choose a suitable size.
+                </p>
+
+
+                <table class="size-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Size</th>
+                            <th>Chest</th>
+                            <th>Waist</th>
+                            <th>Hip</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>XS</td>
+                            <td>32"</td>
+                            <td>26"</td>
+                            <td>34"</td>
+                        </tr>
+
+                        <tr>
+                            <td>S</td>
+                            <td>34"</td>
+                            <td>28"</td>
+                            <td>36"</td>
+                        </tr>
+
+                        <tr>
+                            <td>M</td>
+                            <td>36"</td>
+                            <td>30"</td>
+                            <td>38"</td>
+                        </tr>
+
+                        <tr>
+                            <td>L</td>
+                            <td>38"</td>
+                            <td>32"</td>
+                            <td>40"</td>
+                        </tr>
+
+                        <tr>
+                            <td>XL</td>
+                            <td>40"</td>
+                            <td>34"</td>
+                            <td>42"</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TOAST -->
+
+    <div class="toast" id="toast">
+        <span id="toastMessage">
+            Done
+        </span>
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="./js/script.js"></script>
+
+</body>
+
+</html>
