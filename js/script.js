@@ -3054,125 +3054,274 @@ function closeCart() {
 function renderCart() {
 
     const wrapper =
-        document.getElementById(
-            "cartContent"
-        );
-
+        document.getElementById("cartContent");
 
     const cart =
         getCart();
 
+    /*
+        Update cart item count in drawer header
+    */
+
+    const cartItemCount =
+        cart.reduce(
+            (total, item) =>
+                total + item.quantity,
+            0
+        );
+
+    const cartCountLabel =
+        document.getElementById(
+            "cartItemCountLabel"
+        );
+
+    if (cartCountLabel) {
+
+        cartCountLabel.textContent =
+            `(${cartItemCount} ${cartItemCount === 1
+                ? "item"
+                : "items"
+            })`;
+
+    }
+
+
+    /* =========================================
+       EMPTY CART
+    ========================================= */
 
     if (!cart.length) {
 
         wrapper.innerHTML = `
 
-            <div class="empty-cart">
+            <div class="se-cart-empty">
 
-                <div class="empty-cart-icon">
+                <div class="se-cart-empty-icon">
                     🛒
                 </div>
 
                 <h3>
-                    Your cart is empty
+                    Your ShopEase cart is empty
                 </h3>
 
                 <p>
-                    Add products to your cart
-                    to see them here.
+                    Discover products you'll love
+                    and add them to your cart.
                 </p>
 
                 <button
-                    class="btn btn-primary"
-                    onclick="closeCart();scrollToProducts()"
+                    class="se-cart-shop-btn"
+                    onclick="
+                        closeCart();
+                        scrollToProducts();
+                    "
                 >
                     Start Shopping
                 </button>
 
             </div>
 
-        `;
+    `;
 
-        return;
+
+
 
     }
 
+    /* =========================================
+       TOTALS
+    ========================================= */
 
     let bagTotal = 0;
 
     let originalTotal = 0;
 
 
-    const items =
-        cart
-            .map(
-                (
-                    item,
-                    index
-                ) => {
+    /* =========================================
+       CART ITEMS
+    ========================================= */
 
-                    const product =
-                        item.product ||
-                        products.find(
-                            p => p.id === item.id
-                        );
+    const items = cart
+        .map(
+            (item, index) => {
 
+                const product =
+                    item.product ||
+                    products.find(
+                        p =>
+                            p.id === item.id
+                    );
 
-                    bagTotal +=
-                        product.price *
-                        item.quantity;
-
-
-                    originalTotal +=
-                        product.originalPrice *
-                        item.quantity;
+                if (!product) {
+                    return "";
+                }
 
 
-                    return `
+                bagTotal +=
+                    product.price *
+                    item.quantity;
 
-                        <article class="cart-item">
+
+                originalTotal +=
+                    (
+                        product.originalPrice ||
+                        product.price
+                    ) *
+                    item.quantity;
+
+
+                const itemOriginalPrice =
+                    product.originalPrice ||
+                    product.price;
+
+
+                const discountPercent =
+                    itemOriginalPrice > product.price
+                        ? Math.round(
+                            (
+                                (
+                                    itemOriginalPrice -
+                                    product.price
+                                ) /
+                                itemOriginalPrice
+                            ) * 100
+                        )
+                        : 0;
+
+
+                return `
+
+                    <article
+                        class="se-cart-item"
+                    >
+
+                        <div
+                            class="se-cart-product-image"
+                        >
 
                             <img
                                 src="${product.image}"
-                                alt="${escapeHTML(product.name)}"
+                                alt="${escapeHTML(
+                    product.name
+                )}"
                             >
 
+                        </div>
 
-                            <div class="cart-item-info">
+
+                        <div
+                            class="se-cart-product-content"
+                        >
+
+                            <div
+                                class="se-cart-brand"
+                            >
+                                ${escapeHTML(
+                    product.brand
+                )}
+                            </div>
+
+
+                            <h3
+                                class="se-cart-product-name"
+                            >
+                                ${escapeHTML(
+                    product.name
+                )}
+                            </h3>
+
+
+                            <div
+                                class="se-cart-price-line"
+                            >
 
                                 <strong>
-                                    ${escapeHTML(product.brand)}
+                                    ${money(
+                    product.price
+                )}
                                 </strong>
 
-                                <h4>
-                                    ${escapeHTML(product.name)}
-                                </h4>
+                                ${itemOriginalPrice >
+                        product.price
+                        ? `
+                                            <span
+                                                class="se-cart-original-price"
+                                            >
+                                                ${money(
+                            itemOriginalPrice
+                        )}
+                                            </span>
 
-                                <p>
-                                    ${escapeHTML(product.description)}
-                                </p>
-
-
-                                ${item.size
-                            ? `
-                                            <div class="cart-size">
-                                                Size:
-                                                ${escapeHTML(item.size)}
-                                            </div>
+                                            <span
+                                                class="se-cart-discount"
+                                            >
+                                                ${discountPercent}% OFF
+                                            </span>
                                         `
-                            : ""
-                        }
+                        : ""
+                    }
+
+                            </div>
 
 
-                                <div class="cart-item-price">
-                                    ${money(product.price)}
-                                </div>
+                            <div
+                                class="se-cart-stock"
+                            >
+                                ✓ In stock
+                            </div>
 
 
-                                <div class="cart-item-actions">
+                            <div
+                                class="se-cart-delivery"
+                            >
+                                ✓ Eligible for FREE delivery
+                            </div>
+
+
+                            <div
+                                class="se-cart-seller"
+                            >
+                                Sold by
+                                <strong>
+                                    ShopEase
+                                </strong>
+                            </div>
+
+
+                            ${item.size
+                        ? `
+                                        <div
+                                            class="se-cart-meta"
+                                        >
+                                            <span>
+                                                Size:
+                                                ${escapeHTML(
+                            item.size
+                        )}
+                                            </span>
+                                        </div>
+                                    `
+                        : ""
+                    }
+
+
+                            <div
+                                class="se-cart-actions"
+                            >
+
+                                <div
+                                    class="se-quantity-control"
+                                >
 
                                     <button
-                                        onclick="changeCartQuantity(${index},-1)"
+                                        type="button"
+                                        aria-label="Decrease quantity"
+                                        onclick="
+                                            changeCartQuantity(
+                                                ${index},
+                                                -1
+                                            )
+                                        "
                                     >
                                         −
                                     </button>
@@ -3182,7 +3331,14 @@ function renderCart() {
                                     </span>
 
                                     <button
-                                        onclick="changeCartQuantity(${index},1)"
+                                        type="button"
+                                        aria-label="Increase quantity"
+                                        onclick="
+                                            changeCartQuantity(
+                                                ${index},
+                                                1
+                                            )
+                                        "
                                     >
                                         +
                                     </button>
@@ -3190,23 +3346,61 @@ function renderCart() {
                                 </div>
 
 
-                                <button
-                                    class="cart-remove"
-                                    onclick="removeCartItem(${index})"
+                                <span
+                                    class="se-action-divider"
                                 >
-                                    Remove
+                                    |
+                                </span>
+
+
+                                <button
+                                    type="button"
+                                    class="se-cart-text-action"
+                                    onclick="
+                                        removeCartItem(
+                                            ${index}
+                                        )
+                                    "
+                                >
+                                    Delete
+                                </button>
+
+
+                                <span
+                                    class="se-action-divider"
+                                >
+                                    |
+                                </span>
+
+
+                                <button
+                                    type="button"
+                                    class="se-cart-text-action"
+                                    onclick="
+                                        showToast(
+                                            'Save for later will be available soon.'
+                                        )
+                                    "
+                                >
+                                    Save for later
                                 </button>
 
                             </div>
 
-                        </article>
+                        </div>
 
-                    `;
+                    </article>
 
-                }
-            )
-            .join("");
+                `;
 
+            }
+        )
+        .join("");
+
+
+    /* =========================================
+       SHOP EASE CART CALCULATIONS
+    ========================================= */
 
     const coupon =
         bagTotal >= 1000
@@ -3250,141 +3444,337 @@ function renderCart() {
         );
 
 
+    /* =========================================
+       FREE DELIVERY MESSAGE
+    ========================================= */
+
+    const deliveryMessage =
+        bagTotal >= 2500
+            ? `
+                <div class="se-free-delivery-message success">
+
+                    <span>✓</span>
+
+                    <div>
+                        <strong>
+                            You are eligible for FREE delivery!
+                        </strong>
+                    </div>
+
+                </div>
+            `
+            : `
+                <div class="se-free-delivery-message">
+
+                    <span>🚚</span>
+
+                    <div>
+
+                        <strong>
+                            Add ${money(
+                2500 - bagTotal
+            )} more
+                        </strong>
+
+                        <small>
+                            to get FREE delivery
+                        </small>
+
+                    </div>
+
+                </div>
+            `;
+
+
+    /* =========================================
+       CART CONTENT
+    ========================================= */
+
     wrapper.innerHTML = `
 
-        ${items}
+        ${deliveryMessage}
+
+<!-- COUPON -->
+
+        <div class="se-cart-expandable">
+
+            <button
+                type="button"
+                class="se-cart-coupon"
+                onclick="toggleCartSection('couponSection')"
+            >
+
+                <span class="se-coupon-left">
+
+                    <span class="se-coupon-icon">
+                        🏷️
+                    </span>
+
+                    <span>
+
+                        <strong>
+                            Apply Coupon
+                        </strong>
+
+                        <small>
+                            Use SHOP10 for eligible orders
+                        </small>
+
+                    </span>
+
+                </span>
+
+                <span
+                    class="se-chevron"
+                    id="couponSectionArrow"
+                >
+                    ›
+                </span>
+
+            </button>
 
 
-        <div class="cart-extra-box">
+            <div
+                id="couponSection"
+                class="se-cart-expand-content"
+            >
 
+                <div class="se-coupon-input-row">
 
-            <div class="cart-extra-row">
+                    <input
+                        type="text"
+                        id="cartCouponInput"
+                        placeholder="Enter coupon code"
+                        maxlength="20"
+                    >
 
-                <div>
-
-                    <strong>
-                        🏷️ Apply Coupon
-                    </strong>
-
-                    <p>
-                        Use SHOP10 for eligible orders.
-                    </p>
+                    <button
+                        type="button"
+                        onclick="applyCartCoupon()"
+                    >
+                        Apply
+                    </button>
 
                 </div>
 
-                <button onclick="applyCoupon()">
-                    Select
-                </button>
+                <div class="se-available-coupon">
+
+                    <strong>
+                        SHOP10
+                    </strong>
+
+                    <span>
+                        Get 10% off on eligible orders
+                    </span>
+
+                </div>
 
             </div>
 
+        </div>
 
-            <div class="cart-extra-row">
+        <!-- CART ITEMS -->
 
-                <div>
+        <section class="se-cart-items-section">
 
-                    <strong>
-                        💰 SuperCash
-                    </strong>
+            ${items}
+
+        </section>
+
+
+        
+
+        <!-- SUPERCASH / LOYALTY / GST -->
+
+        <div class="se-cart-benefits">
+
+            <div class="se-benefit-expandable">
+
+                <button
+                    type="button"
+                    class="se-benefit-toggle"
+                    onclick="toggleCartSection('supercashSection')"
+                >
+
+                    <span class="se-benefit-icon">
+                        💰
+                    </span>
+
+                    <span class="se-benefit-text">
+
+                        <strong>
+                            SuperCash
+                        </strong>
+
+                        <small>
+                            Earn ₹10 SuperCash on this order
+                        </small>
+
+                    </span>
+
+                    <span
+                        class="se-benefit-arrow"
+                        id="supercashSectionArrow"
+                    >
+                        ›
+                    </span>
+
+                </button>
+
+                <div
+                    id="supercashSection"
+                    class="se-benefit-expand-content"
+                >
 
                     <p>
-                        You are earning ₹10 SuperCash
+                        You will earn
+                        <strong>₹10 SuperCash</strong>
+                        on this order.
                     </p>
 
                     <small>
-                        Amount will be credited
-                        after return window.
+                        SuperCash will be credited after
+                        the applicable return window.
                     </small>
 
                 </div>
 
-                <button onclick="showInfo('supercash')">
-                    Know more
+            </div>
+
+
+            <div class="se-benefit-expandable">
+
+                <button
+                    type="button"
+                    class="se-benefit-toggle"
+                    onclick="toggleCartSection('loyaltySection')"
+                >
+
+                    <span class="se-benefit-icon">
+                        ⭐
+                    </span>
+
+                    <span class="se-benefit-text">
+
+                        <strong>
+                            Loyalty Points
+                        </strong>
+
+                        <small>
+                            No loyalty points available yet
+                        </small>
+
+                    </span>
+
+                    <span
+                        class="se-benefit-arrow"
+                        id="loyaltySectionArrow"
+                    >
+                        ›
+                    </span>
+
                 </button>
+
+                <div
+                    id="loyaltySection"
+                    class="se-benefit-expand-content"
+                >
+
+                    <p>
+                        You currently have
+                        <strong>0 loyalty points</strong>.
+                    </p>
+
+                    <small>
+                        Points can be earned on eligible
+                        ShopEase purchases.
+                    </small>
+
+                </div>
 
             </div>
 
 
-            <div class="cart-extra-row">
+            <div class="se-benefit-expandable">
 
-                <div>
+                <button
+                    type="button"
+                    class="se-benefit-toggle"
+                    onclick="toggleCartSection('gstSection')"
+                >
 
-                    <strong>
-                        ⭐ Loyalty Points
-                    </strong>
+                    <span class="se-benefit-icon">
+                        🧾
+                    </span>
 
-                    <p>
-                        You have no loyalty points
-                        at the moment.
-                    </p>
+                    <span class="se-benefit-text">
 
-                </div>
+                        <strong>
+                            GST Invoice
+                        </strong>
 
-                <button onclick="showInfo('loyalty')">
-                    Details
+                        <small>
+                            View GST invoice benefits
+                        </small>
+
+                    </span>
+
+                    <span
+                        class="se-benefit-arrow"
+                        id="gstSectionArrow"
+                    >
+                        ›
+                    </span>
+
                 </button>
 
-            </div>
-
-
-            <div class="cart-extra-row">
-
-                <div>
-
-                    <strong>
-                        🧾 GST Invoice
-                    </strong>
+                <div
+                    id="gstSection"
+                    class="se-benefit-expand-content"
+                >
 
                     <p>
-                        Save up to 24%
-                        with GST benefits.
+                        Eligible business customers can
+                        request a GST invoice.
                     </p>
 
-                </div>
+                    <small>
+                        GST details can be provided during
+                        checkout.
+                    </small>
 
-                <button onclick="showInfo('gst')">
-                    View Details
-                </button>
+                </div>
 
             </div>
 
         </div>
 
 
-        ${bagTotal >= 5000
-            ? `
-                    <div class="free-gift-box">
+        <!-- PRICE DETAILS -->
 
-                        <strong>
-                            🎁 Free Gifts
-                        </strong>
+        <section class="se-price-details">
 
-                        <p>
-                            Your order qualifies
-                            for gifts worth up to ₹1,500.
-                        </p>
+            <div class="se-price-details-heading">
 
-                        <button onclick="showInfo('gifts')">
-                            Know more
-                        </button>
-
-                    </div>
-                `
-            : ""
-        }
-
-
-        <div class="order-details">
-
-            <h3>
-                Order Details
-            </h3>
-
-
-            <div class="order-row">
+                <h3>
+                    Price Details
+                </h3>
 
                 <span>
-                    Bag Total
+                    ${cartItemCount}
+                    ${cartItemCount === 1
+            ? "item"
+            : "items"
+        }
+                </span>
+
+            </div>
+
+
+            <div class="se-price-row">
+
+                <span>
+                    Subtotal
                 </span>
 
                 <strong>
@@ -3394,10 +3784,12 @@ function renderCart() {
             </div>
 
 
-            <div class="order-row savings-row">
+            <div
+                class="se-price-row se-discount-row"
+            >
 
                 <span>
-                    Coupon Savings
+                    Coupon Discount
                 </span>
 
                 <strong>
@@ -3407,15 +3799,20 @@ function renderCart() {
             </div>
 
 
-            <div class="order-row">
+            <div class="se-price-row">
 
                 <span>
                     Convenience Fee
 
                     <button
-                        onclick="showInfo('convenience')"
+                        type="button"
+                        onclick="
+                            showInfo(
+                                'convenience'
+                            )
+                        "
                     >
-                        What's this?
+                        ⓘ
                     </button>
 
                 </span>
@@ -3427,13 +3824,18 @@ function renderCart() {
             </div>
 
 
-            <div class="order-row">
+            <div class="se-price-row">
 
                 <span>
                     Delivery Fee
                 </span>
 
-                <strong>
+                <strong
+                    class="${delivery === 0
+            ? "free"
+            : ""
+        }"
+                >
                     ${delivery === 0
             ? "FREE"
             : money(delivery)
@@ -3443,10 +3845,22 @@ function renderCart() {
             </div>
 
 
-            <div class="order-row">
+            <div class="se-price-row">
 
                 <span>
                     Platform Fee
+
+                    <button
+                        type="button"
+                        onclick="
+                            showInfo(
+                                'platform'
+                            )
+                        "
+                    >
+                        ⓘ
+                    </button>
+
                 </span>
 
                 <strong>
@@ -3456,10 +3870,13 @@ function renderCart() {
             </div>
 
 
-            <div class="order-row total-row">
+            <div class="se-price-divider"></div>
+
+
+            <div class="se-total-row">
 
                 <span>
-                    Amount Payable
+                    Total Amount
                 </span>
 
                 <strong>
@@ -3468,49 +3885,154 @@ function renderCart() {
 
             </div>
 
-        </div>
+
+            <div class="se-savings-banner">
+
+                <span>
+                    ✓
+                </span>
+
+                <div>
+                    You are saving
+                    <strong>
+                        ${money(savings)}
+                    </strong>
+                    on this order.
+                </div>
+
+            </div>
+
+        </section>
 
 
-        <div class="return-policy-box">
+        <!-- RETURN POLICY -->
 
-            <strong>
-                ↩️ Return & Refund Policy
-            </strong>
+        <div class="se-return-policy">
 
-            <p>
-                Full amount will be refunded,
-                excluding convenience fee.
-            </p>
+            <div>
 
-            <button onclick="showInfo('returns')">
-                Read Policy
+                <span>
+                    ↩️
+                </span>
+
+                <div>
+
+                    <strong>
+                        10-Day Return & Refund
+                    </strong>
+
+                    <small>
+                        Eligible products can be returned
+                        within the applicable return window.
+                    </small>
+
+                </div>
+
+            </div>
+
+            <button
+                type="button"
+                onclick="
+                    showInfo('returns')
+                "
+            >
+                View Policy
             </button>
 
         </div>
 
 
-        <div class="cart-savings">
+        <!-- CHECKOUT -->
 
-            You are saving
-            <strong>
-                ${money(savings)}
-            </strong>
-            on this order.
+        <div class="se-cart-checkout">
+
+            <button
+                type="button"
+                class="se-proceed-btn"
+                onclick="proceedToPayment()"
+            >
+                Proceed to Buy
+                <span>
+                    (${money(payable)})
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="se-continue-btn"
+                onclick="closeCart()"
+            >
+                Continue Shopping
+            </button>
 
         </div>
 
 
-        <button
-            class="proceed-payment-btn"
-            onclick="proceedToPayment()"
-        >
-            Proceed to Payment
-        </button>
+        <!-- TRUST -->
+
+        <div class="se-cart-trust">
+
+            <div>
+                <span>🚚</span>
+                <strong>
+                    Safe & Secure
+                </strong>
+                <small>
+                    Payments
+                </small>
+            </div>
+
+            <div>
+                <span>🛡️</span>
+                <strong>
+                    Easy Returns
+                </strong>
+                <small>
+                    & Refunds
+                </small>
+            </div>
+
+            <div>
+                <span>☎️</span>
+                <strong>
+                    24/7 Support
+                </strong>
+                <small>
+                    Customer Care
+                </small>
+            </div>
+
+        </div>
 
     `;
+    const couponBox =
+        Array.from(
+            wrapper.querySelectorAll(
+                ".se-cart-expandable"
+            )
+        ).find(
+            element =>
+                element.querySelector(
+                    ".se-cart-coupon"
+                )
+        );
 
+    const cartItemsSection =
+        wrapper.querySelector(
+            ".se-cart-items-section"
+        );
+
+    if (
+        couponBox &&
+        cartItemsSection
+    ) {
+        wrapper.insertBefore(
+            couponBox,
+            cartItemsSection
+        );
+    }
 }
-
 
 /* =========================================================
    CART QUANTITY
@@ -3853,18 +4375,243 @@ function showInfo(
     );
 
 
-    document.getElementById(
-        "infoModalBody"
-    ).innerHTML =
-        `<p>${escapeHTML(data[2])}</p>`;
+    const infoModalBody =
+        document.getElementById(
+            "infoModalBody"
+        );
 
 
-    document.getElementById(
-        "infoModal"
-    ).classList.add(
-        "open"
+    if (type === "orders") {
+
+        const orders =
+            JSON.parse(
+                localStorage.getItem(
+                    "shopEaseOrders"
+                )
+            ) || [];
+
+
+        if (!orders.length) {
+
+            infoModalBody.innerHTML = `
+
+            <div class="orders-empty-state">
+
+                <div class="orders-empty-icon">
+                    📦
+                </div>
+
+                <h3>
+                    No orders yet
+                </h3>
+
+                <p>
+                    Your completed ShopEase orders
+                    will appear here.
+                </p>
+
+            </div>
+
+        `;
+
+        } else {
+
+            infoModalBody.innerHTML = `
+
+            <div class="orders-list">
+
+                ${orders.map(order => {
+
+                const orderDate =
+                    new Date(
+                        order.date
+                    );
+
+
+                const formattedDate =
+                    orderDate.toLocaleDateString(
+                        "en-IN",
+                        {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric"
+                        }
+                    );
+
+
+                const paymentMethod =
+                    order.paymentMethod === "upi"
+                        ? "UPI"
+                        : order.paymentMethod === "card"
+                            ? "Credit / Debit Card"
+                            : order.paymentMethod === "netbanking"
+                                ? "Net Banking"
+                                : "Cash on Delivery";
+
+
+                const items =
+                    Array.isArray(
+                        order.items
+                    )
+                        ? order.items
+                        : [];
+
+
+                return `
+
+                        <article class="order-history-card">
+
+                            <div class="order-history-header">
+
+                                <div>
+
+                                    <span>
+                                        ORDER ID
+                                    </span>
+
+                                    <strong>
+                                        ${escapeHTML(
+                    order.orderId
+                )}
+                                    </strong>
+
+                                </div>
+
+
+                                <span class="order-status">
+                                    ${escapeHTML(
+                    order.status ||
+                    "Order Placed"
+                )}
+                                </span>
+
+                            </div>
+
+
+                            <div class="order-history-meta">
+
+                                <span>
+                                    📅 ${formattedDate}
+                                </span>
+
+                                <span>
+                                    💳 ${paymentMethod}
+                                </span>
+
+                                <strong>
+                                    ${escapeHTML(
+                    order.total ||
+                    "₹0"
+                )}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="order-history-items">
+
+                                ${items.map(item => {
+
+                    const product =
+                        item.product ||
+                        products.find(
+                            product =>
+                                product.id ===
+                                item.id
+                        );
+
+
+                    if (!product) {
+                        return "";
+                    }
+
+
+                    return `
+
+                                        <div class="order-history-item">
+
+                                            <img
+                                                src="${product.image}"
+                                                alt="${escapeHTML(
+                        product.name
+                    )}"
+                                            >
+
+                                            <div>
+
+                                                <strong>
+                                                    ${escapeHTML(
+                        product.name
+                    )}
+                                                </strong>
+
+                                                <span>
+                                                    Qty:
+                                                    ${item.quantity}
+                                                    ${item.size
+                            ? ` · Size: ${escapeHTML(item.size)}`
+                            : ""
+                        }
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+                                    `;
+
+                }).join("")}
+
+                            </div>
+
+
+                            <div class="order-history-footer">
+
+                                <span>
+                                    ✓ Order placed successfully
+                                </span>
+
+                                <strong>
+                                    Delivery: 3–5 business days
+                                </strong>
+
+                            </div>
+
+                        </article>
+
+                    `;
+
+            }).join("")}
+
+            </div>
+
+        `;
+
+        }
+
+    } else {
+
+        infoModalBody.innerHTML =
+            `<p>${escapeHTML(data[2])}</p>`;
+
+    }
+
+
+    const infoModal =
+        document.getElementById(
+            "infoModal"
+        );
+
+
+    infoModal.classList.toggle(
+        "orders-modal",
+        type === "orders"
     );
 
+
+    infoModal.classList.add(
+        "open"
+    );
 }
 
 
@@ -3924,16 +4671,383 @@ function applyCoupon() {
 
 }
 
-
 /* =========================================================
-   PAYMENT
+   CHECKOUT
 ========================================================= */
+
+function openCheckout() {
+
+    const overlay =
+        document.getElementById(
+            "checkoutOverlay"
+        );
+
+    if (!overlay) {
+        showToast(
+            "Checkout is not available."
+        );
+        return;
+    }
+
+    renderCheckout();
+
+    closeCart();
+
+    overlay.classList.add(
+        "open"
+    );
+
+}
+
+
+function closeCheckout() {
+
+    const overlay =
+        document.getElementById(
+            "checkoutOverlay"
+        );
+
+    if (overlay) {
+
+        overlay.classList.remove(
+            "open"
+        );
+
+    }
+
+}
+
+
+function renderCheckout() {
+
+    const cart =
+        getCart();
+
+    const itemsContainer =
+        document.getElementById(
+            "checkoutItems"
+        );
+
+    const itemCount =
+        document.getElementById(
+            "checkoutItemCount"
+        );
+
+    const totalElement =
+        document.getElementById(
+            "checkoutTotal"
+        );
+
+
+    if (!cart.length) {
+
+        closeCheckout();
+
+        showToast(
+            "Your cart is empty."
+        );
+
+        return;
+
+    }
+
+
+    let bagTotal = 0;
+
+    let coupon = 0;
+
+    let delivery = 0;
+
+    const convenienceFee =
+        29;
+
+    const platformFee =
+        22;
+
+
+    const checkoutItems =
+        cart
+            .map(
+                item => {
+
+                    const product =
+                        item.product ||
+                        products.find(
+                            p =>
+                                p.id ===
+                                item.id
+                        );
+
+
+                    if (!product) {
+                        return "";
+                    }
+
+
+                    const itemTotal =
+                        product.price *
+                        item.quantity;
+
+
+                    bagTotal +=
+                        itemTotal;
+
+
+                    return `
+
+                        <div
+                            class="checkout-item"
+                        >
+
+                            <img
+                                src="${product.image}"
+                                alt="${escapeHTML(product.name)}"
+                            >
+
+                            <div
+                                class="checkout-item-info"
+                            >
+
+                                <strong>
+                                    ${escapeHTML(
+                        product.name
+                    )}
+                                </strong>
+
+                                <span>
+                                    Qty: ${item.quantity}
+                                </span>
+
+                            </div>
+
+                            <div
+                                class="checkout-item-price"
+                            >
+                                ${money(itemTotal)}
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+
+    /*
+        Same coupon rule used by the cart
+    */
+
+    coupon =
+        bagTotal >= 1000
+            ? Math.min(
+                Math.round(
+                    bagTotal * 0.10
+                ),
+                500
+            )
+            : 0;
+
+
+    /*
+        Same delivery rule used by the cart
+    */
+
+    delivery =
+        bagTotal >= 2500
+            ? 0
+            : 79;
+
+
+    const payable =
+        bagTotal -
+        coupon +
+        delivery +
+        convenienceFee +
+        platformFee;
+
+
+    if (itemsContainer) {
+
+        itemsContainer.innerHTML =
+            checkoutItems;
+
+    }
+
+
+    if (itemCount) {
+
+        const totalItems =
+            cart.reduce(
+                (
+                    total,
+                    item
+                ) =>
+                    total +
+                    item.quantity,
+                0
+            );
+
+        itemCount.textContent =
+            `${totalItems} ${totalItems === 1
+                ? "item"
+                : "items"
+            }`;
+
+    }
+
+
+    if (totalElement) {
+
+        totalElement.textContent =
+            money(payable);
+
+    }
+
+}
+
 
 function proceedToPayment() {
 
-    showToast(
-        "Checkout will be connected in the next phase."
+    openCheckout();
+
+}
+
+
+function continueToPayment() {
+
+    const cart = getCart();
+
+    if (!cart.length) {
+
+        showToast(
+            "Your cart is empty."
+        );
+
+        closeCheckout();
+
+        return;
+    }
+
+
+    const totalElement =
+        document.getElementById(
+            "checkoutTotal"
+        );
+
+    const orderTotal =
+        totalElement
+            ? totalElement.textContent
+            : "₹0";
+
+
+    const orderId =
+        "SE-" +
+        Date.now()
+            .toString()
+            .slice(-8);
+
+
+    const orderIdElement =
+        document.getElementById(
+            "confirmationOrderId"
+        );
+
+    const orderTotalElement =
+        document.getElementById(
+            "confirmationOrderTotal"
+        );
+
+
+    if (orderIdElement) {
+
+        orderIdElement.textContent =
+            orderId;
+
+    }
+
+
+    if (orderTotalElement) {
+
+        orderTotalElement.textContent =
+            orderTotal;
+
+    }
+
+    const orders =
+        JSON.parse(
+            localStorage.getItem(
+                "shopEaseOrders"
+            )
+        ) || [];
+
+
+    orders.unshift({
+
+        orderId: orderId,
+
+        total: orderTotal,
+
+        items: cart.map(item => ({
+
+            id: item.id,
+
+            quantity: item.quantity,
+
+            size: item.size || "",
+
+            product: item.product
+
+        })),
+
+        paymentMethod:
+            document.querySelector(
+                "input[name='paymentMethod']:checked"
+            )?.value || "upi",
+
+        status: "Order Placed",
+
+        date:
+            new Date().toISOString()
+
+    });
+
+
+    localStorage.setItem(
+        "shopEaseOrders",
+        JSON.stringify(orders)
     );
+
+    localStorage.removeItem("shopEaseCart");
+
+    const checkoutOverlay =
+        document.getElementById(
+            "checkoutOverlay"
+        );
+
+    const confirmationOverlay =
+        document.getElementById(
+            "orderConfirmationOverlay"
+        );
+
+
+    if (checkoutOverlay) {
+
+        checkoutOverlay.classList.remove(
+            "open"
+        );
+
+    }
+
+
+    if (confirmationOverlay) {
+
+        confirmationOverlay.classList.add(
+            "open"
+        );
+
+    }
 
 }
 
@@ -4097,5 +5211,114 @@ function escapeHTML(
             "'",
             "&#039;"
         );
+
+}
+/* =========================================================
+   PAYMENT METHOD SELECTION
+========================================================= */
+
+document.addEventListener(
+    "change",
+    function (event) {
+
+        if (
+            event.target.name !==
+            "paymentMethod"
+        ) {
+            return;
+        }
+
+
+        const paymentMethods =
+            document.querySelectorAll(
+                ".payment-method"
+            );
+
+
+        paymentMethods.forEach(
+            method => {
+
+                const radio =
+                    method.querySelector(
+                        ("input[name='paymentMethod']")
+                    );
+
+                method.classList.toggle(
+                    "active",
+                    radio &&
+                    radio.checked
+                );
+
+            }
+        );
+
+    }
+);
+/* =========================================================
+   SHOP EASE — ORDER CONFIRMATION ACTIONS
+========================================================= */
+
+function closeOrderConfirmation() {
+
+    const confirmationOverlay =
+        document.getElementById(
+            "orderConfirmationOverlay"
+        );
+
+    if (confirmationOverlay) {
+
+        confirmationOverlay.classList.remove(
+            "open"
+        );
+
+    }
+
+}
+
+/* =========================================================
+   HTML ESCAPE HELPER
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+/* =========================================================
+   CURRENCY FORMAT HELPER
+========================================================= */
+
+function money(value) {
+
+    return new Intl.NumberFormat(
+        "en-IN",
+        {
+            style: "currency",
+            currency: "INR",
+            maximumFractionDigits: 0
+        }
+    ).format(
+        value
+    );
 
 }

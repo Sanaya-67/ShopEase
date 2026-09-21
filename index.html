@@ -1794,21 +1794,23 @@
             <div>
 
                 <span class="section-kicker">
-                    SHOPPING BAG
+                    SHOPPING CART
                 </span>
 
                 <h2>
-                    Your Cart
+                    Shopping Cart
+                    <span id="cartItemCountLabel" class="cart-item-count-label">
+                        (0 items)
+                    </span>
                 </h2>
 
             </div>
 
-            <button onclick="closeCart()">
+            <button class="cart-close-btn" type="button" aria-label="Close shopping cart" onclick="closeCart()">
                 ✕
             </button>
 
         </div>
-
 
         <div class="cart-content" id="cartContent"></div>
 
@@ -1936,6 +1938,533 @@
 
     </div>
 
+    <!-- =====================================================
+     SHOP EASE CHECKOUT
+===================================================== -->
+
+    <div class="checkout-overlay" id="checkoutOverlay">
+
+        <div class="checkout-page">
+
+            <!-- CHECKOUT HEADER -->
+
+            <div class="checkout-header">
+
+                <div>
+
+                    <span class="section-kicker">
+                        SECURE CHECKOUT
+                    </span>
+
+                    <h2>
+                        Checkout
+                    </h2>
+
+                </div>
+
+                <button type="button" class="checkout-close" onclick="closeCheckout()" aria-label="Close checkout">
+                    ✕
+                </button>
+
+            </div>
+
+
+            <!-- CHECKOUT STEPS -->
+
+            <div class="checkout-steps">
+
+                <div class="checkout-step active">
+
+                    <span>1</span>
+
+                    <strong>
+                        Delivery
+                    </strong>
+
+                </div>
+
+                <div class="checkout-step-line"></div>
+
+                <div class="checkout-step">
+
+                    <span>2</span>
+
+                    <strong>
+                        Payment
+                    </strong>
+
+                </div>
+
+                <div class="checkout-step-line"></div>
+
+                <div class="checkout-step">
+
+                    <span>3</span>
+
+                    <strong>
+                        Confirmation
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- CHECKOUT BODY -->
+
+            <div class="checkout-body">
+
+
+                <!-- DELIVERY ADDRESS -->
+
+                <section class="checkout-card">
+
+                    <div class="checkout-card-heading">
+
+                        <div>
+
+                            <span class="section-kicker">
+                                STEP 1
+                            </span>
+
+                            <h3>
+                                Delivery Address
+                            </h3>
+
+                        </div>
+
+                        <button type="button" class="checkout-link-btn">
+                            + Add New Address
+                        </button>
+
+                    </div>
+
+
+                    <!-- SAVED ADDRESS -->
+
+                    <label class="address-option">
+
+                        <input type="radio" name="deliveryAddress" checked>
+
+                        <span class="address-radio"></span>
+
+                        <span class="address-content">
+
+                            <strong>
+                                Tulika Baidya
+                            </strong>
+
+                            <span>
+                                Kolkata, West Bengal
+                            </span>
+
+                            <span>
+                                India
+                            </span>
+
+                            <span>
+                                Mobile: +91 XXXXX XXXXX
+                            </span>
+
+                            <small>
+                                Delivery available to this address
+                            </small>
+
+                        </span>
+
+                        <span class="address-badge">
+                            DEFAULT
+                        </span>
+
+                    </label>
+
+                </section>
+
+
+                <!-- DELIVERY INFORMATION -->
+
+                <section class="checkout-card">
+
+                    <div class="checkout-card-heading">
+
+                        <div>
+
+                            <span class="section-kicker">
+                                DELIVERY
+                            </span>
+
+                            <h3>
+                                Delivery Information
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="delivery-option">
+
+                        <span class="delivery-icon">
+                            🚚
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                FREE Standard Delivery
+                            </strong>
+
+                            <span>
+                                Estimated delivery within 3–5 business days
+                            </span>
+
+                        </div>
+
+                        <strong class="delivery-free">
+                            FREE
+                        </strong>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ORDER SUMMARY -->
+
+                <section class="checkout-card">
+
+                    <div class="checkout-card-heading">
+
+                        <div>
+
+                            <span class="section-kicker">
+                                ORDER
+                            </span>
+
+                            <h3>
+                                Order Summary
+                            </h3>
+
+                        </div>
+
+                        <span id="checkoutItemCount" class="checkout-item-count">
+                            0 items
+                        </span>
+
+                    </div>
+
+
+                    <div id="checkoutItems" class="checkout-items"></div>
+
+
+                    <div class="checkout-summary-divider"></div>
+
+
+                    <div class="checkout-total-row">
+
+                        <span>
+                            Total Payable
+                        </span>
+
+                        <strong id="checkoutTotal">
+                            ₹0
+                        </strong>
+
+                    </div>
+
+                </section>
+
+
+                <!-- PAYMENT -->
+
+                <section class="checkout-card">
+
+                    <div class="checkout-card-heading">
+
+                        <div>
+
+                            <span class="section-kicker">
+                                NEXT STEP
+                            </span>
+
+                            <h3>
+                                Payment Method
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="payment-methods">
+
+                        <!-- UPI -->
+
+                        <label class="payment-method active">
+
+                            <input type="radio" name="paymentMethod" value="upi" checked>
+
+                            <span class="payment-method-radio"></span>
+
+                            <span class="payment-method-icon">
+                                📱
+                            </span>
+
+                            <span class="payment-method-content">
+
+                                <strong>
+                                    UPI
+                                </strong>
+
+                                <small>
+                                    Google Pay, PhonePe, Paytm and other UPI apps
+                                </small>
+
+                            </span>
+
+                        </label>
+
+
+                        <!-- CARD -->
+
+                        <label class="payment-method">
+
+                            <input type="radio" name="paymentMethod" value="card">
+
+                            <span class="payment-method-radio"></span>
+
+                            <span class="payment-method-icon">
+                                💳
+                            </span>
+
+                            <span class="payment-method-content">
+
+                                <strong>
+                                    Credit / Debit Card
+                                </strong>
+
+                                <small>
+                                    Visa, Mastercard, RuPay and other cards
+                                </small>
+
+                            </span>
+
+                        </label>
+
+
+                        <!-- NET BANKING -->
+
+                        <label class="payment-method">
+
+                            <input type="radio" name="paymentMethod" value="netbanking">
+
+                            <span class="payment-method-radio"></span>
+
+                            <span class="payment-method-icon">
+                                🏦
+                            </span>
+
+                            <span class="payment-method-content">
+
+                                <strong>
+                                    Net Banking
+                                </strong>
+
+                                <small>
+                                    Pay securely through your bank
+                                </small>
+
+                            </span>
+
+                        </label>
+
+
+                        <!-- COD -->
+
+                        <label class="payment-method">
+
+                            <input type="radio" name="paymentMethod" value="cod">
+
+                            <span class="payment-method-radio"></span>
+
+                            <span class="payment-method-icon">
+                                💵
+                            </span>
+
+                            <span class="payment-method-content">
+
+                                <strong>
+                                    Cash on Delivery
+                                </strong>
+
+                                <small>
+                                    Pay when your order is delivered
+                                </small>
+
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="payment-security-note">
+
+                        <span>
+                            🔒
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Your payment information is secure
+                            </strong>
+
+                            <small>
+                                ShopEase uses secure payment processing.
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- CHECKOUT FOOTER -->
+
+            <div class="checkout-footer">
+
+                <div class="checkout-security">
+
+                    <span>
+                        🔒
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Safe & Secure Checkout
+                        </strong>
+
+                        <small>
+                            Your order information is protected.
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <button type="button" class="checkout-continue-btn" onclick="continueToPayment()">
+                    Place Order
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- =====================================================
+     SHOP EASE ORDER CONFIRMATION
+===================================================== -->
+
+    <div class="order-confirmation-overlay" id="orderConfirmationOverlay">
+
+        <div class="order-confirmation-page">
+
+            <div class="confirmation-icon">
+                ✓
+            </div>
+
+            <span class="section-kicker">
+                ORDER CONFIRMATION
+            </span>
+
+            <h2>
+                Order Placed Successfully!
+            </h2>
+
+            <p class="confirmation-message">
+                Thank you for shopping with ShopEase.
+                Your order has been received.
+            </p>
+
+
+            <div class="confirmation-order-box">
+
+                <div>
+
+                    <span>
+                        ORDER ID
+                    </span>
+
+                    <strong id="confirmationOrderId">
+                        SE-000000
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        TOTAL AMOUNT
+                    </span>
+
+                    <strong id="confirmationOrderTotal">
+                        ₹0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="confirmation-delivery">
+
+                <span>
+                    🚚
+                </span>
+
+                <div>
+
+                    <strong>
+                        Estimated Delivery
+                    </strong>
+
+                    <p>
+                        3–5 business days
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="confirmation-security">
+
+                🔒 Your order information is securely saved.
+
+            </div>
+
+
+            <div class="confirmation-actions">
+
+                <button type="button" class="confirmation-primary-btn" onclick="closeOrderConfirmation()">
+                    Continue Shopping
+                </button>
+
+                <button type="button" class="confirmation-secondary-btn" onclick="closeOrderConfirmation()">
+                    View Order
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
 
     <!-- TOAST -->
 
